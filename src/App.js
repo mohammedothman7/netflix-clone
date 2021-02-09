@@ -7,6 +7,8 @@ import "./App.css";
 import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout, selectUser } from "./features/userSlice";
+import Profile from "./components/Profile";
+import Nav from "./components/Nav";
 
 function App() {
   const user = useSelector(selectUser);
@@ -24,7 +26,7 @@ function App() {
         );
       } else {
         // User logged out
-        dispatch(logout);
+        dispatch(logout());
       }
     });
 
@@ -38,7 +40,12 @@ function App() {
           <Login />
         ) : (
           <Switch>
+            <Route path="/profile">
+              <Nav />
+              <Profile />
+            </Route>
             <Route exact path="/">
+              <Nav />
               <Home />
             </Route>
           </Switch>
