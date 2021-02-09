@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SignUp from "./SignUp";
+import SignUp from "./Signup";
 
 import "../css/Login.css";
 
