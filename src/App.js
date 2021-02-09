@@ -26,7 +26,7 @@ function App() {
         );
       } else {
         // User logged out
-        dispatch(logout);
+        dispatch(logout());
       }
     });
 
