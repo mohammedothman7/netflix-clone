@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./components/Home";
-import Login from "./components/Login";
-
-import "./App.css";
 import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout, selectUser } from "./features/userSlice";
+import Home from "./components/Home";
+import Login from "./components/Login";
 import Profile from "./components/Profile";
 import Nav from "./components/Nav";
+
+import "./App.css";
 
 function App() {
   const user = useSelector(selectUser);
