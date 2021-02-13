@@ -22,7 +22,7 @@ function Profile() {
           <div className="profile__details">
             <h2>{user?.email}</h2>
             <div className="profile__plans">
-              <h3>Plans (Current Plan: {roleCapitalized})</h3>
+              {role && <h3>Plans (Current Plan: {roleCapitalized})</h3>}
 
               <Plans />
               <button
