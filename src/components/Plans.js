@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser, update } from "../features/userSlice";
 import db from "../firebase";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -8,8 +8,8 @@ import "../css/Plans.css";
 
 function Plans() {
   const [products, setProducts] = useState([]);
-  const [subscription, setSubscription] = useState(null);
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     db.collection("customers")
@@ -18,15 +18,18 @@ function Plans() {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach(async (subscription) => {
-          setSubscription({
-            role: subscription.data().role,
-            current_period_end: subscription.data().current_period_end.seconds,
-            current_period_start: subscription.data().current_period_start
-              .seconds,
-          });
+          dispatch(
+            update({
+              role: subscription.data().role,
+              current_period_end: subscription.data().current_period_end
+                .seconds,
+              current_period_start: subscription.data().current_period_start
+                .seconds,
+            })
+          );
         });
       });
-  }, [user.uid]);
+  }, [dispatch, user.uid]);
 
   useEffect(() => {
     db.collection("products")
@@ -49,10 +52,7 @@ function Plans() {
       });
   }, []);
 
-  console.log(subscription);
-
   const loadCheckout = async (priceId) => {
-    console.log(user.uid);
     const docRef = await db
       .collection("customers")
       .doc(user.uid)
@@ -81,18 +81,16 @@ function Plans() {
 
   return (
     <div className="plans">
-      {subscription && (
+      {user?.role && (
         <p>
           Renewal Date:{" "}
-          {new Date(
-            subscription?.current_period_end * 1000
-          ).toLocaleDateString()}
+          {new Date(user?.current_period_end * 1000).toLocaleDateString()}
         </p>
       )}
       {Object.entries(products).map(([productId, productData]) => {
         const isCurrentPackage = productData.name
           ?.toLowerCase()
-          .includes(subscription?.role);
+          .includes(user?.role);
 
         return (
           <div
@@ -105,7 +103,6 @@ function Plans() {
               <h5>{productData.name}</h5>
               <h6>{productData.description}</h6>
             </div>
-            {console.log(productData.prices?.priceId)}
             <button
               onClick={() =>
                 !isCurrentPackage && loadCheckout(productData.prices.priceId)
