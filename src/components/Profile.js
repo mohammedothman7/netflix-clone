@@ -8,6 +8,8 @@ import "../css/Profile.css";
 
 function Profile() {
   const user = useSelector(selectUser);
+  const role = user?.role;
+  const roleCapitalized = role?.charAt(0)?.toUpperCase() + role?.slice(1);
   return (
     <div className="profile">
       <div className="profile__body">
@@ -18,9 +20,10 @@ function Profile() {
             alt="avatar"
           />
           <div className="profile__details">
-            <h2>{user.email}</h2>
+            <h2>{user?.email}</h2>
             <div className="profile__plans">
-              <h3>Plans</h3>
+              <h3>Plans (Current Plan: {roleCapitalized})</h3>
+
               <Plans />
               <button
                 onClick={() => auth.signOut()}
