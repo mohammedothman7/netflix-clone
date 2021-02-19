@@ -17,10 +17,8 @@ import "swiper/components/scrollbar/scrollbar.scss";
 
 import "../css/Row.css";
 
-
 // install Swiper modules
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Lazy]);
-
 
 function Row({ title, fetchUrl, isLargeRow = false }) {
   const [movies, setMovies] = useState([]);
@@ -61,7 +59,6 @@ function Row({ title, fetchUrl, isLargeRow = false }) {
     <>
       {movies && (
         <div className="row">
-          {console.log({ movies })}
           <h2>{title}</h2>
           <Swiper
             navigation
@@ -69,11 +66,7 @@ function Row({ title, fetchUrl, isLargeRow = false }) {
             lazy
             loop={true}
             loopedSlides={movies.length || 20}
-            observer={true}
-            observeParents={true}
-            onSwiper={(swiper) => console.log(swiper)}
-            onSlideChange={() => console.log("slide change")}
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "100%", height: "100%", overflow: "hidden" }}
           >
             <div className="row__posters">
               {movies?.map(
