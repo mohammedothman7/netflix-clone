@@ -17,8 +17,10 @@ import "swiper/components/scrollbar/scrollbar.scss";
 
 import "../css/Row.css";
 
+
 // install Swiper modules
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Lazy]);
+
 
 function Row({ title, fetchUrl, isLargeRow = false }) {
   const [movies, setMovies] = useState([]);
