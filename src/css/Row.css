@@ -6,7 +6,6 @@
 .row__posters {
   display: flex;
   overflow-y: hidden;
-  overflow-x: scroll;
   padding: 20px;
 }
 
@@ -29,9 +28,20 @@
 
 .row__posterLarge {
   max-height: 350px;
+  max-width: 250px;
 }
 
 .row__posterLarge:hover {
   transform: scale(1.09);
   opacity: 1;
+}
+
+.swiper-slide {
+  width: 150px;
+  margin-right: 10px;
+}
+
+.swiper-slide-large {
+  margin-right: 0px;
+  width: 250px;
 }
