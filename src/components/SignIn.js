@@ -2,9 +2,11 @@ import React, { useRef } from "react";
 import { auth } from "../firebase";
 
 import "../css/SignIn.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
-function SignIn({ email, handleEmail }) {
+function SignIn() {
+  const location = useLocation();
+  const emailRef = useRef();
   const passwordRef = useRef(null);
   let history = useHistory();
 
@@ -12,7 +14,11 @@ function SignIn({ email, handleEmail }) {
     e.preventDefault();
 
     auth
-      .signInWithEmailAndPassword(email, passwordRef.current.value)
+      .signInWithEmailAndPassword(
+        emailRef.current.value,
+        passwordRef.current.value
+      )
+      .then(() => history.push("/"))
       .catch((error) => alert(error.message));
   };
 
@@ -25,21 +31,27 @@ function SignIn({ email, handleEmail }) {
           <input
             placeholder="Email"
             type="email"
-            value={email}
-            // onChange={(e) => handleEmail(e.target.value)}
+            ref={emailRef}
+            required
+            defaultValue={location?.state?.email}
           />
-          <input placeholder="Password" type="password" ref={passwordRef} />
+          <input
+            placeholder="Password"
+            type="password"
+            ref={passwordRef}
+            required
+          />
           <button type="submit" onClick={signIn}>
             Sign In
           </button>
           <h4>
+            <span className="signin__gray">New to Netflix? </span>
             <span
-              className="signin__gray"
-              onClick={() => history.push("/signin")}
+              className="signin__link"
+              onClick={() => history.push("/signup")}
             >
-              New to Netflix?{" "}
+              Sign up now.
             </span>
-            <span className="signin__link">Sign up now.</span>
           </h4>
         </form>
       </div>
