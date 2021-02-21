@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { auth } from "../firebase";
 
 import "../css/SignUp.css";
@@ -9,6 +9,7 @@ function SignUp() {
   const lastNameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const [errors, setErrors] = useState(null);
   let history = useHistory();
 
   const register = (e) => {
@@ -25,7 +26,7 @@ function SignUp() {
         })
       )
       .then(() => history.push("/"))
-      .catch((error) => alert(error.message));
+      .catch((error) => setErrors(error.message));
   };
 
   return (
@@ -53,6 +54,8 @@ function SignUp() {
             ref={passwordRef}
             required
           />
+          {errors && <p className="signup__error">{errors}</p>}
+
           <button type="submit" onSubmit={register}>
             Sign Up
           </button>

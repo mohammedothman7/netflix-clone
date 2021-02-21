@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { auth } from "../firebase";
 
 import "../css/SignIn.css";
@@ -8,6 +8,7 @@ function SignIn() {
   const location = useLocation();
   const emailRef = useRef();
   const passwordRef = useRef(null);
+  const [errors, setErrors] = useState(null);
   let history = useHistory();
 
   const signIn = (e) => {
@@ -19,7 +20,7 @@ function SignIn() {
         passwordRef.current.value
       )
       .then(() => history.push("/"))
-      .catch((error) => alert(error.message));
+      .catch((error) => setErrors(error.message));
   };
 
   return (
@@ -41,6 +42,7 @@ function SignIn() {
             ref={passwordRef}
             required
           />
+          {errors && <p className="signin__error">{errors}</p>}
           <button type="submit" onClick={signIn}>
             Sign In
           </button>
