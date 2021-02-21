@@ -15,6 +15,7 @@
   font-size: 3rem;
   font-weight: 800;
   padding-bottom: 0.3rem;
+  text-shadow: 1px 3px black;
 }
 
 .banner__description {
@@ -25,6 +26,7 @@
   max-width: 600px;
   height: 150px;
   margin-right: 10px;
+  text-shadow: 2px 1px black;
 }
 
 .banner-fadeBottom {
