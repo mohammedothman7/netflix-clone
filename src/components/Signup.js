@@ -2,49 +2,73 @@ import React, { useRef } from "react";
 import { auth } from "../firebase";
 
 import "../css/SignUp.css";
+import { useHistory } from "react-router-dom";
 
-function Signup({ email, handleEmail }) {
+function SignUp() {
+  const firstNameRef = useRef(null);
+  const lastNameRef = useRef(null);
+  const emailRef = useRef(null);
   const passwordRef = useRef(null);
-
-  const signIn = (e) => {
-    e.preventDefault();
-
-    auth
-      .signInWithEmailAndPassword(email, passwordRef.current.value)
-      .catch((error) => alert(error.message));
-  };
+  let history = useHistory();
 
   const register = (e) => {
     e.preventDefault();
 
     auth
-      .createUserWithEmailAndPassword(email, passwordRef.current.value)
+      .createUserWithEmailAndPassword(
+        emailRef.current.value,
+        passwordRef.current.value
+      )
+      .then((res) =>
+        res.user.updateProfile({
+          displayName: `${firstNameRef.current.value} ${lastNameRef.current.value}`,
+        })
+      )
+      .then(() => history.push("/"))
       .catch((error) => alert(error.message));
   };
 
   return (
     <div className="signup">
-      <form>
-        <h1>Sign In</h1>
-        <input
-          placeholder="Email"
-          type="email"
-          value={email}
-          onChange={(e) => handleEmail(e.target.value)}
-        />
-        <input placeholder="Password" type="password" ref={passwordRef} />
-        <button type="submit" onClick={signIn}>
-          Sign In
-        </button>
-        <h4>
-          <span className="signup__gray">New to Netflix? </span>
-          <span className="signup__link" onClick={register}>
-            Sign up now.
-          </span>
-        </h4>
-      </form>
+      <div className="getStarted__gradient"></div>
+      <div className="signin__container">
+        <form onSubmit={register}>
+          <h1>Sign Up</h1>
+          <input
+            placeholder="First Name"
+            type="text"
+            ref={firstNameRef}
+            required
+          />
+          <input
+            placeholder="Last Name"
+            type="text"
+            ref={lastNameRef}
+            required
+          />
+          <input placeholder="Email" type="email" ref={emailRef} required />
+          <input
+            placeholder="Password"
+            type="password"
+            ref={passwordRef}
+            required
+          />
+          <button type="submit" onSubmit={register}>
+            Sign Up
+          </button>
+          <h4>
+            <span className="signup__gray">Already have an account? </span>
+            <span
+              className="signup__link"
+              onClick={() => history.push("/signin")}
+            >
+              Sign in now.
+            </span>
+          </h4>
+        </form>
+      </div>
     </div>
   );
 }
 
-export default Signup;
+export default SignUp;
