@@ -4,11 +4,12 @@ import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout, selectUser } from "./features/userSlice";
 import Home from "./components/Home";
-import Login from "./components/Login";
 import Profile from "./components/Profile";
-import Nav from "./components/Nav";
+import GetStarted from "./components/GetStarted";
 
 import "./App.css";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 
 function App() {
   const user = useSelector(selectUser);
@@ -22,6 +23,7 @@ function App() {
           login({
             uid: userAuth.uid,
             email: userAuth.email,
+            displayName: userAuth.displayName,
           })
         );
       } else {
@@ -36,26 +38,21 @@ function App() {
   return (
     <div className="app">
       <Router>
-        {!user ? ( // No user exist then display Login screen
-          <Login />
-        ) : !user?.role ? ( // User does not have subscription then display profile screen
-          <>
-            <Nav />
-            <Profile />
-          </>
-        ) : (
-          // User is logged in and has subscription allow access to enitre application
-          <Switch>
-            <Route path="/profile">
-              <Nav />
-              <Profile />
-            </Route>
-            <Route exact path="/">
-              <Nav />
-              <Home />
-            </Route>
-          </Switch>
-        )}
+        <Switch>
+          <Route path="/get-started">
+            <GetStarted />
+          </Route>
+          <Route path="/signin">
+            <SignIn />
+          </Route>
+          <Route path="/signup">
+            <SignUp />
+          </Route>
+          <Route path="/profile">{!user ? <GetStarted /> : <Profile />}</Route>
+          <Route exact path="/">
+            {!user ? <GetStarted /> : !user.role ? <Profile /> : <Home />}
+          </Route>
+        </Switch>
       </Router>
     </div>
   );
