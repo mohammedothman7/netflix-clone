@@ -77,3 +77,9 @@
     rgba(0, 0, 0, 0.7) 100%
   );
 }
+
+.signup__error {
+  color: #e50914;
+  font-size: 16px;
+  max-width: 250px;
+}
