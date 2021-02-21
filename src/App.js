@@ -36,9 +36,15 @@ function App() {
   return (
     <div className="app">
       <Router>
-        {!user ? (
+        {!user ? ( // No user exist then display Login screen
           <Login />
+        ) : !user?.role ? ( // User does not have subscription then display profile screen
+          <>
+            <Nav />
+            <Profile />
+          </>
         ) : (
+          // User is logged in and has subscription allow access to enitre application
           <Switch>
             <Route path="/profile">
               <Nav />
