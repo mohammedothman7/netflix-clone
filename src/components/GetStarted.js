@@ -38,7 +38,16 @@ function GetStarted() {
           </h3>
 
           <div className="getStarted__input">
-            <form>
+            <form
+              onSubmit={() =>
+                history.push({
+                  pathname: "/signin",
+                  state: {
+                    email,
+                  },
+                })
+              }
+            >
               <input
                 type="email"
                 placeholder="Email Address"
@@ -46,10 +55,7 @@ function GetStarted() {
                 value={email}
                 onChange={(e) => handleEmail(e.target.value)}
               />
-              <button
-                className="getStarted__getStarted"
-                onClick={() => history.push("/signin")}
-              >
+              <button className="getStarted__getStartedButton">
                 GET STARTED
               </button>
             </form>

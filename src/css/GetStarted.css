@@ -9,10 +9,91 @@
 .getStarted__logo {
   position: fixed;
   left: 0;
+  top: 0;
   width: 150px;
   object-fit: contain;
   padding-left: 20px;
+  z-index: 999;
 }
+.getStarted {
+  position: relative;
+  height: 100vh;
+  background: url("https://assets.nflxext.com/ffe/siteui/vlv3/538717c0-f271-40e9-a99e-b07f9c521322/785c7470-5017-4447-8845-b7eeaa9f2070/US-en-20210201-popsignuptwoweeks-perspective_alpha_website_large.jpg")
+    center no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.getStarted__container {
+  max-width: 100%;
+  padding: 70px 100px;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.75);
+  position: absolute;
+  color: white;
+  z-index: 1;
+  text-align: center;
+}
+
+.getStarted__container > form {
+  display: grid;
+  flex-direction: column;
+}
+
+.getStarted__container > form > h1 {
+  margin-bottom: 25px;
+}
+
+.getStarted__container > form > input {
+  outline-width: 0;
+  height: 40px;
+  margin-bottom: 14px;
+  border-radius: 5px;
+  border: none;
+  padding: 5px 15px;
+  width: 250px;
+}
+
+.getStarted__container > form > button {
+  padding: 16px 20px;
+  font-size: 1rem;
+  color: white;
+  border-radius: 5px;
+  background-color: #e50914;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+
+.getStarted__gray {
+  color: gray;
+}
+
+.getStarted__link {
+  color: white;
+}
+
+.getStarted__link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+/* .getStarted__gradient {
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.7) 0,
+    rgba(0, 0, 0, 0) 6%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+} */
 
 .getStarted__button {
   position: fixed;
@@ -28,6 +109,7 @@
   padding: 10px 17px;
   border-radius: 3px;
   text-decoration: none;
+  z-index: 999;
 }
 
 .getStarted__button:hover {
@@ -72,7 +154,7 @@
   margin-top: 15px;
 }
 
-.getStarted__getStarted {
+.getStarted__getStartedButton {
   padding: 16px 20px;
   font-size: 1rem;
   color: white;
@@ -89,6 +171,7 @@
   width: 100%;
   z-index: 1;
   height: 100vh;
+  position: absolute;
   background: rgba(0, 0, 0, 0.4);
   background-image: linear-gradient(
     to top,
@@ -96,4 +179,6 @@
     rgba(0, 0, 0, 0) 6%,
     rgba(0, 0, 0, 0.8) 100%
   );
+  top: 0;
+  left: 0;
 }
