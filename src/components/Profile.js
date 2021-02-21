@@ -5,13 +5,24 @@ import { auth } from "../firebase";
 import Plans from "./Plans";
 
 import "../css/Profile.css";
+import Nav from "./Nav";
+import { useHistory } from "react-router-dom";
 
 function Profile() {
   const user = useSelector(selectUser);
   const role = user?.role;
   const roleCapitalized = role?.charAt(0)?.toUpperCase() + role?.slice(1);
+
+  let history = useHistory();
+
+  const handleSignOut = (e) => {
+    e.preventDefault();
+
+    auth.signOut().then(history.push("/get-started"));
+  };
   return (
     <div className="profile">
+      <Nav />
       <div className="profile__body">
         <h1>Edit Profile</h1>
         <div className="profile__info">
@@ -25,10 +36,7 @@ function Profile() {
               {role && <h3>Plans (Current Plan: {roleCapitalized})</h3>}
 
               <Plans />
-              <button
-                onClick={() => auth.signOut()}
-                className="profile__signout"
-              >
+              <button onClick={handleSignOut} className="profile__signout">
                 Sign Out
               </button>
             </div>
