@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,18 +15,19 @@ import PrivateRoute from "./components/PrivateRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import "./App.css";
+import { selectLoading, setLoading } from "./features/loadingSlice";
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = useSelector(selectLoading);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsLoading(true); // Set to true to display spinner while firebase auth loads
+    dispatch(setLoading(true)); // Set to true to display spinner while firebase auth loads
     const unsubscribe = auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {
         // User logged in
-        setIsLoading(false);
+        dispatch(setLoading(false)); // Stop displaying spinner
         dispatch(
           login({
             uid: userAuth.uid,
@@ -36,7 +37,7 @@ function App() {
         );
       } else {
         // User logged out
-        setIsLoading(false);
+        dispatch(setLoading(false));
         dispatch(logout());
       }
     });
