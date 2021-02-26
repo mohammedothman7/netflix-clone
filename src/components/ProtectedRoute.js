@@ -7,8 +7,6 @@ import { selectUser } from "../features/userSlice";
 const ProtectedRoute = ({ component: RouteComponent, ...rest }) => {
   const user = useSelector(selectUser);
 
-  console.log({ user });
-
   return (
     <Route
       {...rest}
