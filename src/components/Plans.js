@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, update } from "../features/userSlice";
-import db from "../firebase";
 import { loadStripe } from "@stripe/stripe-js";
+import { setLoading } from "../features/loadingSlice";
+import db from "../firebase";
 
 import "../css/Plans.css";
 
@@ -53,6 +54,7 @@ function Plans() {
   }, []);
 
   const loadCheckout = async (priceId) => {
+    dispatch(setLoading(true));
     const docRef = await db
       .collection("customers")
       .doc(user.uid)
