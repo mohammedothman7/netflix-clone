@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { auth } from "../firebase";
 
-import "../css/SignUp.css";
+import "../css/Signup.css";
 import { useHistory } from "react-router-dom";
 
 function SignUp() {
