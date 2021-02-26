@@ -2,7 +2,9 @@ import React, { useRef, useState } from "react";
 import { auth } from "../firebase";
 
 import "../css/Signup.css";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
 
 function SignUp() {
   const firstNameRef = useRef(null);
@@ -10,6 +12,7 @@ function SignUp() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const [errors, setErrors] = useState(null);
+  const user = useSelector(selectUser);
   let history = useHistory();
 
   const register = (e) => {
@@ -28,6 +31,8 @@ function SignUp() {
       .then(() => history.push("/"))
       .catch((error) => setErrors(error.message));
   };
+
+  if (user) return <Redirect to="/" />;
 
   return (
     <div className="signup">
