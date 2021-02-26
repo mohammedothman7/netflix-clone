@@ -3,14 +3,18 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout, selectUser } from "./features/userSlice";
+
+// Components
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import GetStarted from "./components/GetStarted";
-
-import "./App.css";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/Signup";
 import Spinner from "./components/Spinner";
+import PrivateRoute from "./components/PrivateRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import "./App.css";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +22,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsLoading(true); // Set to true to display spinner while firebase auth loads
     const unsubscribe = auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {
         // User logged in
@@ -40,7 +44,7 @@ function App() {
     return unsubscribe;
   }, [dispatch]);
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <Spinner />; // Displaying spinner
 
   return (
     <div className="app">
@@ -55,10 +59,11 @@ function App() {
           <Route path="/signup">
             <SignUp />
           </Route>
-          <Route path="/profile">{!user ? <GetStarted /> : <Profile />}</Route>
-          <Route exact path="/">
-            {!user ? <GetStarted /> : !user.role ? <Profile /> : <Home />}
-          </Route>
+
+          {user && <PrivateRoute path="/profile" component={Profile} />}
+          {user && <ProtectedRoute exact path="/" component={Home} />}
+
+          <Route component={user ? Profile : GetStarted} />
         </Switch>
       </Router>
     </div>

@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 
 import "../css/GetStarted.css";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
 
 function GetStarted() {
   const [email, setEmail] = useState("");
+  const user = useSelector(selectUser);
   let history = useHistory();
 
   const handleEmail = (email) => {
     setEmail(email);
   };
+
+  if (user) return <Redirect to="/" />;
 
   return (
     <div className="getStarted">

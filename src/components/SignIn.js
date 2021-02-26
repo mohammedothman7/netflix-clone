@@ -2,13 +2,16 @@ import React, { useRef, useState } from "react";
 import { auth } from "../firebase";
 
 import "../css/SignIn.css";
-import { useHistory, useLocation } from "react-router-dom";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
 
 function SignIn() {
   const location = useLocation();
   const emailRef = useRef();
   const passwordRef = useRef(null);
   const [errors, setErrors] = useState(null);
+  const user = useSelector(selectUser);
   let history = useHistory();
 
   const signIn = (e) => {
@@ -22,6 +25,8 @@ function SignIn() {
       .then(() => history.push("/"))
       .catch((error) => setErrors(error.message));
   };
+
+  if (user) return <Redirect to="/" />;
 
   return (
     <div className="signin">
