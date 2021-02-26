@@ -86,6 +86,8 @@ function Row({ title, fetchUrl, isLargeRow = false }) {
                         alt={
                           movie?.title || movie?.name || movie?.original_name
                         }
+                        height={isLargeRow ? 350 : 225}
+                        width={isLargeRow ? 250 : 150}
                       />
                     </SwiperSlide>
                   )
