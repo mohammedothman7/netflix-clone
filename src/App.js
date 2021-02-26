@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,16 +9,20 @@ import GetStarted from "./components/GetStarted";
 
 import "./App.css";
 import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
+import SignUp from "./components/Signup";
+import Spinner from "./components/Spinner";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setIsLoading(true);
     const unsubscribe = auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {
         // User logged in
+        setIsLoading(false);
         dispatch(
           login({
             uid: userAuth.uid,
@@ -28,12 +32,15 @@ function App() {
         );
       } else {
         // User logged out
+        setIsLoading(false);
         dispatch(logout());
       }
     });
 
     return unsubscribe;
   }, [dispatch]);
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="app">
