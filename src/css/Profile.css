@@ -60,3 +60,59 @@
   border-bottom: 1px solid #282c2d;
   padding-bottom: 10px;
 }
+
+@media all and (max-width: 480px) {
+  .profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+    margin-top: 40px;
+  }
+
+  .profile__body {
+    width: 70%;
+  }
+
+  .profile__details {
+    width: 100%;
+    margin: 0;
+  }
+
+  .profile__info {
+    flex-wrap: wrap;
+  }
+
+  .profile__info > img {
+    margin-bottom: 20px;
+    margin-right: 100px;
+  }
+
+  .profile__plans {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-basis: auto;
+  }
+
+  .profile__signout {
+    margin-bottom: 40px;
+  }
+  /* .profile__details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .profile__plans {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  } */
+}
