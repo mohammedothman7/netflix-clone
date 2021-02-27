@@ -66,6 +66,7 @@ function App() {
       } else {
         // User logged out
         dispatch(logout());
+        dispatch(setLoading(false));
       }
     });
 
