@@ -37,7 +37,7 @@ function SignUp() {
   return (
     <div className="signup">
       <div className="getStarted__gradient"></div>
-      <div className="signin__container">
+      <div className="signup__container">
         <form onSubmit={register}>
           <h1>Sign Up</h1>
           <input
