@@ -1,3 +1,7 @@
+.plans {
+  margin-top: 15px;
+}
+
 .plans__plan {
   display: flex;
   justify-content: space-between;
@@ -27,4 +31,14 @@
 
 .plans__plan--disabled > button {
   background-color: gray !important;
+}
+
+@media all and (max-width: 480px) {
+  .plans__plan {
+    flex-direction: column;
+  }
+
+  .plans__info {
+    margin-bottom: 10px;
+  }
 }
