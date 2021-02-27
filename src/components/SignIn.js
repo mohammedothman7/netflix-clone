@@ -3,8 +3,9 @@ import { auth } from "../firebase";
 
 import "../css/SignIn.css";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../features/userSlice";
+import { setLoading } from "../features/loadingSlice";
 
 function SignIn() {
   const location = useLocation();
@@ -12,10 +13,13 @@ function SignIn() {
   const passwordRef = useRef(null);
   const [errors, setErrors] = useState(null);
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
   let history = useHistory();
 
   const signIn = (e) => {
     e.preventDefault();
+
+    dispatch(setLoading(true));
 
     auth
       .signInWithEmailAndPassword(
