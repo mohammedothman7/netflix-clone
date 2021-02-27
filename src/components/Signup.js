@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
 import { auth } from "../firebase";
+import { Redirect, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
 
 import "../css/Signup.css";
-import { Redirect, useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectUser } from "../features/userSlice";
+import { setLoading } from "../features/loadingSlice";
 
 function SignUp() {
   const firstNameRef = useRef(null);
@@ -13,10 +14,13 @@ function SignUp() {
   const passwordRef = useRef(null);
   const [errors, setErrors] = useState(null);
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
   let history = useHistory();
 
   const register = (e) => {
     e.preventDefault();
+
+    dispatch(setLoading(true));
 
     auth
       .createUserWithEmailAndPassword(
