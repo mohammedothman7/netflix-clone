@@ -7,6 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: hidden;
 }
 
 .signup__container {
@@ -82,4 +83,10 @@
   color: #e50914;
   font-size: 16px;
   max-width: 250px;
+}
+
+@media all and (max-width: 480px) {
+  .signup__container {
+    padding: 60px 40px;
+  }
 }

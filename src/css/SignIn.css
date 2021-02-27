@@ -84,3 +84,9 @@
   font-size: 16px;
   max-width: 250px;
 }
+
+@media all and (max-width: 480px) {
+  .signin__container {
+    padding: 60px 40px;
+  }
+}
