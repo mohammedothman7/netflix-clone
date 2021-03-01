@@ -1,12 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import { auth } from "../firebase";
+import { useHistory } from "react-router-dom";
+import { setLoading } from "../features/loadingSlice";
 import Plans from "./Plans";
+import Nav from "./Nav";
 
 import "../css/Profile.css";
-import Nav from "./Nav";
-import { useHistory } from "react-router-dom";
 
 function Profile() {
   const user = useSelector(selectUser);
@@ -14,10 +15,12 @@ function Profile() {
   const roleCapitalized = role?.charAt(0)?.toUpperCase() + role?.slice(1);
 
   let history = useHistory();
+  let dispatch = useDispatch();
 
   const handleSignOut = (e) => {
     e.preventDefault();
 
+    dispatch(setLoading(true)); // Display spinner
     auth.signOut().then(history.push("/get-started"));
   };
   return (
