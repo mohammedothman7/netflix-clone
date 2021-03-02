@@ -26,7 +26,7 @@ function Home() {
       <Row title="Action Movies" fetchUrl={request.fecthActionMovies} />
       <Row title="Comedy Movies" fetchUrl={request.fecthComedyMovies} />
       <Row title="Horror Movies" fetchUrl={request.fecthHorrorMovies} />
-      <Row title="Romance Movies" fetchUrl={request.fecthRomanceMovies} />
+      <Row title="Adventure Movies" fetchUrl={request.fecthAdventureMovies} />
       <Row title="Family Movies" fetchUrl={request.fetchFamilyMovies} />
 
       <Footer />
