@@ -7,7 +7,7 @@ const request = {
   fecthActionMovies: `/discover/movie?api_key=${API_KEY}&with_genres=28`,
   fecthComedyMovies: `/discover/movie?api_key=${API_KEY}&with_genres=35`,
   fecthHorrorMovies: `/discover/movie?api_key=${API_KEY}&with_genres=27`,
-  fecthRomanceMovies: `/discover/movie?api_key=${API_KEY}&with_genres=10749`,
+  fecthAdventureMovies: `/discover/movie?api_key=${API_KEY}&with_genres=12`,
   fetchFamilyMovies: `/discover/movie?api_key=${API_KEY}&with_genres=10751`,
 };
 
