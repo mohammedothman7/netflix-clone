@@ -1,10 +1,13 @@
 import React from "react";
+import request from "../request";
+
+// Components
 import Nav from "../components/Nav";
 import Banner from "../components/Banner";
 import Row from "../components/Row";
+import Footer from "./Footer";
 
 import "../css/Home.css";
-import request from "../request";
 
 function Home() {
   return (
@@ -25,6 +28,8 @@ function Home() {
       <Row title="Horror Movies" fetchUrl={request.fecthHorrorMovies} />
       <Row title="Romance Movies" fetchUrl={request.fecthRomanceMovies} />
       <Row title="Family Movies" fetchUrl={request.fetchFamilyMovies} />
+
+      <Footer />
     </div>
   );
 }
