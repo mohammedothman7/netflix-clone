@@ -27,18 +27,13 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         // User logged in
-
-        const customersRef = db.collection("customers").doc(userAuth.uid);
-        const doc = await customersRef.get();
-
-        if (doc.exists) {
-          // Check if user has subscription
-          db.collection("customers")
-            .doc(userAuth.uid)
-            .collection("subscriptions")
-            .get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach(async (subscription) => {
+        db.collection("customers")
+          .doc(userAuth.uid)
+          .collection("subscriptions")
+          .get()
+          .then((doc) => {
+            if (doc?.docs[0]?.exists) {
+              doc.forEach(async (subscription) => {
                 dispatch(
                   login({
                     uid: userAuth.uid,
@@ -52,17 +47,20 @@ function App() {
                   })
                 );
               });
-            });
-        } else {
-          // If user does not have subscription
-          dispatch(
-            login({
-              uid: userAuth.uid,
-              email: userAuth.email,
-              displayName: userAuth.displayName,
-            })
-          );
-        }
+            } else {
+              // If user does not have subscription
+              dispatch(
+                login({
+                  uid: userAuth.uid,
+                  email: userAuth.email,
+                  displayName: userAuth.displayName,
+                })
+              );
+            }
+          })
+          .catch(() => {
+            dispatch(setLoading(false));
+          });
       } else {
         // User logged out
         dispatch(logout());
