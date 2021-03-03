@@ -1,19 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { auth } from "../firebase";
 import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
+import { setLoading } from "../features/loadingSlice";
+import { resetErrors, selectErrors, setErrors } from "../features/errorsSlice";
 
 import "../css/Signup.css";
-import { setLoading } from "../features/loadingSlice";
 
 function SignUp() {
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const [errors, setErrors] = useState(null);
   const user = useSelector(selectUser);
+  const errors = useSelector(selectErrors);
   const dispatch = useDispatch();
   let history = useHistory();
 
@@ -21,6 +22,7 @@ function SignUp() {
     e.preventDefault();
 
     dispatch(setLoading(true));
+    dispatch(resetErrors());
 
     auth
       .createUserWithEmailAndPassword(
@@ -33,7 +35,10 @@ function SignUp() {
         })
       )
       .then(() => history.push("/"))
-      .catch((error) => setErrors(error.message));
+      .catch((error) => {
+        dispatch(setLoading(false));
+        dispatch(setErrors(error.message));
+      });
   };
 
   if (user) return <Redirect to="/" />;
@@ -62,6 +67,7 @@ function SignUp() {
             type="password"
             ref={passwordRef}
             required
+            minLength="6"
           />
           {errors && <p className="signup__error">{errors}</p>}
 

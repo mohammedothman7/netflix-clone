@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { auth } from "../firebase";
 
 import "../css/SignIn.css";
@@ -6,13 +6,14 @@ import { Redirect, useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import { setLoading } from "../features/loadingSlice";
+import { resetErrors, selectErrors, setErrors } from "../features/errorsSlice";
 
 function SignIn() {
   const location = useLocation();
   const emailRef = useRef();
   const passwordRef = useRef(null);
-  const [errors, setErrors] = useState(null);
   const user = useSelector(selectUser);
+  const errors = useSelector(selectErrors);
   const dispatch = useDispatch();
   let history = useHistory();
 
@@ -20,6 +21,7 @@ function SignIn() {
     e.preventDefault();
 
     dispatch(setLoading(true));
+    dispatch(resetErrors);
 
     auth
       .signInWithEmailAndPassword(
@@ -27,7 +29,10 @@ function SignIn() {
         passwordRef.current.value
       )
       .then(() => history.push("/"))
-      .catch((error) => setErrors(error.message));
+      .catch((error) => {
+        dispatch(setLoading(false));
+        dispatch(setErrors(error.message));
+      });
   };
 
   if (user) return <Redirect to="/" />;
