@@ -50,3 +50,9 @@
 .footer__copyright {
   margin-bottom: 40px;
 }
+
+@media all and (max-width: 480px) {
+  .footer__linkWrapper {
+    flex-basis: 50%;
+  }
+}
